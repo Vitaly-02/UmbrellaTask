@@ -34,8 +34,11 @@ func (s *Server) initHandlers() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	homeHandler := http.HandlerFunc(s.e.Home)
+	changeHandler := http.HandlerFunc(s.e.ChangeDate)
 
+	mux.Handle("/change_date", mw.AdminHandler(changeHandler))
 	mux.Handle("/home", mw.RoleCheck(homeHandler))
+
 	return mux
 }
 
