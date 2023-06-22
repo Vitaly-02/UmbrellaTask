@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: umbrella-test-task
+  description: umbrella-test-task
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /home:
+    get:
+      description: Return days until big day
+      operationId: home
+      responses:
+        200:
+          description: Return days as json
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  days:
+                    type: integer
+        500:
+          description: Internal error
+
+  /change_date:
+    post:
+      description: Change date of the big day
+      operationId: change_date
+      parameters:
+        - name: User-Role
+          in: header
+          schema:
+            type: string
+          example:
+            User-Role: "admin"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+            example:
+                date: "2024-Feb-01"
+      responses:
+        200:
+          description: Success
+        400:
+          description: Wrong request body
+        401:
+          description: Only "admin" User-Role has access
+        500:
+          description: Internal error
+
+  
